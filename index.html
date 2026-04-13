@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Stick Man Portfolio</title>
+
+<style>
+  body {
+    margin: 0;
+    overflow: hidden;
+  }
+
+  /* Game container (viewport) */
+  #game {
+    width: 100vw;
+    height: 100vh;
+    background: #eef;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* World that moves */
+  #world {
+    position: absolute;
+    height: 100%;
+    width: 3000px; /* big horizontal world */
+  }
+
+  /* Stick man (centered) */
+  #player {
+    position: absolute;
+    left: 50%;
+    top: 60%;
+    width: 30px;
+    height: 50px;
+    background: black;
+    transform: translateX(-50%);
+  }
+
+  /* Ground */
+  #ground {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100px;
+    background: #333;
+  }
+
+  /* Trigger box */
+  .trigger {
+    position: absolute;
+    bottom: 100px;
+    width: 100px;
+    height: 100px;
+    background: orange;
+    text-align: center;
+    line-height: 100px;
+    font-weight: bold;
+  }
+</style>
+</head>
+
+<body>
+
+<div id="game">
+  <div id="world">
+    
+    <!-- Trigger -->
+    <div class="trigger" id="aboutBox" style="left: 800px;">
+      ABOUT
+    </div>
+
+    <div id="ground"></div>
+  </div>
+
+  <!-- Player stays centered -->
+  <div id="player"></div>
+</div>
+
+<script>
+/* ---------------------------
+   BASIC VARIABLES
+----------------------------*/
+
+let playerX = 0;        // horizontal position in world
+let playerY = 0;        // vertical position (jumping)
+let velocityY = 0;      // jump speed
+let gravity = 0.6;
+let isJumping = false;
+
+let speed = 5;
+
+const world = document.getElementById("world");
+const player = document.getElementById("player");
+const aboutBox = document.getElementById("aboutBox");
+
+/* ---------------------------
+   INPUT HANDLING
+----------------------------*/
+
+let keys = {};
+
+document.addEventListener("keydown", (e) => {
+  keys[e.code] = true;
+
+  // Jump
+  if (e.code === "Space" && !isJumping) {
+    velocityY = -12;
+    isJumping = true;
+  }
+});
+
+document.addEventListener("keyup", (e) => {
+  keys[e.code] = false;
+});
+
+/* ---------------------------
+   GAME LOOP
+----------------------------*/
+
+function update() {
+
+  /* ---- Horizontal movement ---- */
+  if (keys["ArrowRight"]) {
+    playerX += speed;
+  }
+  if (keys["ArrowLeft"]) {
+    playerX -= speed;
+  }
+
+  /* ---- Gravity / Jump ---- */
+  velocityY += gravity;
+  playerY += velocityY;
+
+  // Ground collision
+  if (playerY > 0) {
+    playerY = 0;
+    velocityY = 0;
+    isJumping = false;
+  }
+
+  /* ---- Move world (camera effect) ---- */
+  let screenCenter = window.innerWidth / 2;
+  world.style.transform = `translateX(${-playerX + screenCenter}px)`;
+
+  /* ---- Move player vertically ---- */
+  player.style.transform = `translate(-50%, ${playerY}px)`;
+
+  /* ---- Interaction check ---- */
+  checkInteraction();
+
+  requestAnimationFrame(update);
+}
+
+update();
+
+/* ---------------------------
+   INTERACTION LOGIC
+----------------------------*/
+
+function checkInteraction() {
+  let boxX = aboutBox.offsetLeft;
+
+  let distance = Math.abs(playerX - boxX);
+
+  // If close AND jumping
+  if (distance < 50 && isJumping) {
+    window.location.href = "about.html";
+  }
+}
+</script>
+
+</body>
+</html>
