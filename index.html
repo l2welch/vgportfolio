@@ -165,12 +165,16 @@ update();
 ----------------------------*/
 
 function checkInteraction() {
-  let boxX = aboutBox.offsetLeft;
+  let boxLeft = aboutBox.offsetLeft;
+  let boxRight = boxLeft + aboutBox.offsetWidth;
 
-  let distance = Math.abs(playerX - boxX);
+  let playerLeft = playerX - 15;  // half player width (30px / 2)
+  let playerRight = playerX + 15;
 
-  // If close AND jumping
-  if (distance < 50 && isJumping) {
+  let isOverlapping = playerRight > boxLeft && playerLeft < boxRight;
+
+  // Trigger only if overlapping AND jumping
+  if (isOverlapping && isJumping) {
     window.location.href = "about.html";
   }
 }
