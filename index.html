@@ -168,10 +168,11 @@ function checkInteraction() {
   let boxLeft = aboutBox.offsetLeft;
   let boxRight = boxLeft + aboutBox.offsetWidth;
 
-  let playerLeft = playerX - 15;  // half player width (30px / 2)
-  let playerRight = playerX + 15;
+ let playerCenter = playerX;
 
-  let isOverlapping = playerRight > boxLeft && playerLeft < boxRight;
+let isOverlapping =
+  playerCenter > boxLeft &&
+  playerCenter < boxRight;
 
   // Trigger only if overlapping AND jumping
   if (isOverlapping && isJumping) {
