@@ -54,7 +54,7 @@
   .trigger {
     position: absolute;
     bottom: 150px;
-    width: 500px;
+    width: 100px;
     height: 200px;
     background: #eef;
     text-align: center;
@@ -72,7 +72,7 @@
   <div id="world">
     
     <!-- Trigger -->
-    <div class="trigger" id="aboutBox" style="left: 600px;">
+    <div class="trigger" id="aboutBox" style="left: 800px;">
       ABOUT
     </div>
 
@@ -147,10 +147,10 @@ function update() {
 
   /* ---- Move world (camera effect) ---- */
   let screenCenter = window.innerWidth / 2;
-  world.style.transform = `translateX(${-playerX + screenCenter}px)`;
+  world.style.transform = translateX(${-playerX + screenCenter}px);
 
   /* ---- Move player vertically ---- */
-  player.style.transform = `translateX(-50%) translateY(${playerY}px)`;
+  player.style.transform = translate(-50%, ${playerY}px);
 
   /* ---- Interaction check ---- */
   checkInteraction();
@@ -165,14 +165,11 @@ update();
 ----------------------------*/
 
 function checkInteraction() {
-  const playerHalfWidth = 15; // half of your 30px player width
-
   let boxLeft = aboutBox.offsetLeft;
   let boxRight = boxLeft + aboutBox.offsetWidth;
 
-  // Check if ANY part of the player overlaps ANY part of the box
-  let playerLeft = playerX - playerHalfWidth;
-  let playerRight = playerX + playerHalfWidth;
+  let playerLeft = playerX - 15;  // half player width (30px / 2)
+  let playerRight = playerX + 15;
 
   let isOverlapping = playerRight > boxLeft && playerLeft < boxRight;
 
