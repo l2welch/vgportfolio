@@ -150,7 +150,7 @@ function update() {
   world.style.transform = `translateX(${-playerX + screenCenter}px)`;
 
   /* ---- Move player vertically ---- */
-  player.style.transform = `translate(-50%, ${playerY}px)`;
+  player.style.transform = `translateX(-50%) translateY(${playerY}px)`;
 
   /* ---- Interaction check ---- */
   checkInteraction();
