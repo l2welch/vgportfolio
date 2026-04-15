@@ -35,7 +35,9 @@
   left: 50%;
   bottom: 20%;
   width: 80px;
-  height: auto;
+  height: 80px;
+  object-fit: contain;
+  object-position: bottom; 
   transform: translateX(-50%);
 }
 
@@ -80,7 +82,6 @@
 
   <!-- Player stays centered -->
   <img id="player" src="run1.png">
-  <img id="player" src="run2.png">
 </div>
 
 <script>
@@ -155,33 +156,31 @@ if (moving) {
   frameTimer++;
 
   if (frameTimer > frameDelay) {
-    frame = (frame + 1) % 2; // switch between 0 and 1
+    frame = (frame + 1) % 2;
     frameTimer = 0;
 
-    if (frame === 0) {
-      player.src = "run1.png";
-    } else {
-      player.src = "run2.png";
-    }
+    player.src = frame === 0 ? "run1.png" : "run2.png";
   }
-  
 } else {
-  // idle frame
+  frame = 0;
   player.src = "run1.png";
 }
 
-  if (keys["ArrowLeft"]) {
-  player.style.transform = "translate(-50%, " + playerY + "px) scaleX(-1)";
-} else {
-  player.style.transform = "translate(-50%, " + playerY + "px) scaleX(1)";
-}
+ let direction = 1;
+
+if (keys["ArrowLeft"]) direction = -1;
+if (keys["ArrowRight"]) direction = 1;
+
+player.style.transform = `
+  translateX(-50%)
+  translateY(${playerY}px)
+  scaleX(${direction})
+`;
 
   /* ---- Move world (camera effect) ---- */
   let screenCenter = window.innerWidth / 2;
 world.style.transform = `translateX(${screenCenter - playerX}px)`;
 
-  /* ---- Move player vertically ---- */
- player.style.transform = `translateX(-50%) translateY(${playerY}px)`;
 
   /* ---- Interaction check ---- */
   checkInteraction();
