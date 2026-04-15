@@ -31,14 +31,12 @@
 
   /* Stick man (centered) */
   #player {
-    position: absolute;
-    left: 50%;
-    bottom: 100px;
-    width: 30px;
-    height: 50px;
-    background: black;
-    transform: translateX(-50%);
-  }
+  position: absolute;
+  left: 50%;
+  top: 60%;
+  width: 50px;
+  transform: translateX(-50%);
+}
 
   /* Ground */
  #ground {
@@ -80,7 +78,7 @@
   </div>
 
   <!-- Player stays centered -->
-  <div id="player"></div>
+  <img id="player" src="run1.png">
 </div>
 
 <script>
@@ -99,6 +97,10 @@ let speed = 5;
 const world = document.getElementById("world");
 const player = document.getElementById("player");
 const aboutBox = document.getElementById("aboutBox");
+
+let frame = 0;
+let frameTimer = 0;
+let frameDelay = 10; // lower = faster animation
 
 /* ---------------------------
    INPUT HANDLING
@@ -144,6 +146,33 @@ function update() {
     velocityY = 0;
     isJumping = false;
   }
+  
+  let moving = keys["ArrowRight"] || keys["ArrowLeft"];
+
+if (moving) {
+  frameTimer++;
+
+  if (frameTimer > frameDelay) {
+    frame = (frame + 1) % 2; // switch between 0 and 1
+    frameTimer = 0;
+
+    if (frame === 0) {
+      player.src = "run1.png";
+    } else {
+      player.src = "run2.png";
+    }
+  }
+  
+} else {
+  // idle frame
+  player.src = "run1.png";
+}
+
+  if (keys["ArrowLeft"]) {
+  player.style.transform = "translate(-50%, " + playerY + "px) scaleX(-1)";
+} else {
+  player.style.transform = "translate(-50%, " + playerY + "px) scaleX(1)";
+}
 
   /* ---- Move world (camera effect) ---- */
   let screenCenter = window.innerWidth / 2;
