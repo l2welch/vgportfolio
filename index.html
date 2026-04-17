@@ -107,7 +107,7 @@ body.fade-out {
     <div id="name">
     LIVIA WELCH
     </div>
-    <div id="name" style="bottom: 52%; left: -25%; font-size: 50px;">
+    <div id="name" style="bottom: 52%; left: -24%; font-size: 50px;">
     Tech & Art Portfolio 2026
     </div>
     
@@ -137,6 +137,8 @@ const aboutBox = document.getElementById("aboutBox");
 let frame = 0;
 let frameTimer = 0;
 let frameDelay = 5;
+
+ let transitioning = false;
 
 /* ---------------------------
    INPUT HANDLING
@@ -235,23 +237,22 @@ function checkInteraction() {
   let playerRight = playerX + 15;
 
   let isOverlapping = playerRight > boxLeft && playerLeft < boxRight;
-  let transitioning = false;
 
-  // Prevent spam calls BEFORE triggering
-  if (isOverlapping && isJumping && transitioning) {
+  // Correct condition
+  if (isOverlapping && isJumping && !transitioning) {
     startFadeTransition("about.html");
   }
 }
 
 function startFadeTransition(targetPage) {
-  if (transitioning) return; // prevent multiple triggers
+  if (transitioning) return;
   transitioning = true;
 
   document.body.classList.add("fade-out");
 
   setTimeout(() => {
-    window.location.href = about.html;
-  }, 600); // match CSS duration
+    window.location.href = targetPage;
+  }, 600);
 }
 </script>
 
