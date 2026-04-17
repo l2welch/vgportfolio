@@ -77,6 +77,17 @@
   font-size: 250px;
   }
 
+  body {
+  margin: 0;
+  overflow: hidden;
+  opacity: 1;
+  transition: opacity 0.6s ease;
+}
+
+/* When fading out */
+body.fade-out {
+  opacity: 0;
+}
  
 </style>
 </head>
@@ -220,15 +231,27 @@ function checkInteraction() {
   let boxLeft = aboutBox.offsetLeft;
   let boxRight = boxLeft + aboutBox.offsetWidth;
 
-  let playerLeft = playerX - 15;  // half player width (30px / 2)
+  let playerLeft = playerX - 15;
   let playerRight = playerX + 15;
 
   let isOverlapping = playerRight > boxLeft && playerLeft < boxRight;
+  let transitioning = false;
 
-  // Trigger only if overlapping AND jumping
-  if (isOverlapping && isJumping) {
-    window.location.href = "about.html";
+  // Prevent spam calls BEFORE triggering
+  if (isOverlapping && isJumping && !transitioning) {
+    startFadeTransition("about.html");
   }
+}
+
+function startFadeTransition(targetPage) {
+  if (transitioning) return; // prevent multiple triggers
+  transitioning = true;
+
+  document.body.classList.add("fade-out");
+
+  setTimeout(() => {
+    window.location.href = targetPage;
+  }, 600); // match CSS duration
 }
 </script>
 
