@@ -96,13 +96,26 @@ body.fade-out {
   transform: translateX(-50%);
   background: #eef;
   padding: 15px 20px;
-  border-radius: 12px;
+  border-radius: 50px;
   border-style: solid;  
   border-width: 3px;
   border-color: black;
   font-family: 'Barlow Condensed', sans-serif;
   text-align: center;
   pointer-events: none; /* clicks go through */
+}
+  #speechBubble::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;   /* pushes it below bubble */
+  left: 30px;      /* move left/right to position tail */
+
+  width: 0;
+  height: 0;
+
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-top: 20px solid #eef; /* same as bubble */
 }
 
 #speechMain {
