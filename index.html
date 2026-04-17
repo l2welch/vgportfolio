@@ -69,7 +69,7 @@
   }
 
   /* Name Text Box */
-  #name {
+  .name {
   position: absolute;
   bottom: 55%;
   left: -25%;
@@ -88,6 +88,31 @@
 body.fade-out {
   opacity: 0;
 }
+
+  #speechBubble {
+  position: absolute;
+  left: 50%;
+  bottom: 45%; /* above player */
+  transform: translateX(-50%);
+  background: white;
+  padding: 15px 20px;
+  border-radius: 12px;
+  font-family: 'Barlow Condensed', sans-serif;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  pointer-events: none; /* clicks go through */
+}
+
+#speechMain {
+  font-size: 24px;
+  color: #111;
+}
+
+#speechSub {
+  font-size: 14px;
+  color: #777;
+  margin-top: 5px;
+}
  
 </style>
 </head>
@@ -95,6 +120,12 @@ body.fade-out {
 <body>
 
 <div id="game">
+
+  <div id="speechBubble">
+  <div id="speechMain">Hello! Welcome to my website!</div>
+  <div id="speechSub">click anywhere</div>
+</div>
+  
   <div id="world">
     
     <!-- Trigger -->
@@ -104,11 +135,11 @@ body.fade-out {
 
     <div id="ground"></div>
 
-    <div id="name">
+    <div class="name">
     LIVIA WELCH
     </div>
-    <div id="name" style="bottom: 52%; left: -24.5%; font-size: 50px;">
-    Tech & Art Portfolio 2026
+    <div class="name" style="bottom: 52%; left: -24.5%; font-size: 50px;">
+    Tech & Design Portfolio 2026
     </div>
     
   </div>
@@ -139,9 +170,35 @@ let frameTimer = 0;
 let frameDelay = 5;
 
  let transitioning = false;
+  
+/* ---------------------------
+   SPEECH BUBBLE
+----------------------------*/
+
+const speechMain = document.getElementById("speechMain");
+const speechSub = document.getElementById("speechSub");
+const speechBubble = document.getElementById("speechBubble");
+
+let dialogue = [
+  "Hello! Welcome to my website!",
+  "Use arrow keys to move",
+  "Jump into ABOUT to learn more about me"
+];
+
+let dialogueIndex = 0;
+
+document.addEventListener("click", () => {
+  dialogueIndex++;
+
+if (dialogueIndex < dialogue.length) {
+    speechMain.textContent = dialogue[dialogueIndex];
+  } else {
+    speechBubble.style.display = "none"; // hide after last message
+  }
+});
 
 /* ---------------------------
-   INPUT HANDLING
+   MOVEMENT - INPUTS
 ----------------------------*/
 
 let keys = {};
@@ -161,7 +218,7 @@ document.addEventListener("keyup", (e) => {
 });
 
 /* ---------------------------
-   GAME LOOP
+   MOVEMENT - LOOPS
 ----------------------------*/
 
 function update() {
