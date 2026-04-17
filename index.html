@@ -238,7 +238,7 @@ function checkInteraction() {
   let transitioning = false;
 
   // Prevent spam calls BEFORE triggering
-  if (isOverlapping && isJumping && !transitioning) {
+  if (isOverlapping && isJumping && transitioning) {
     startFadeTransition("about.html");
   }
 }
@@ -250,7 +250,7 @@ function startFadeTransition(targetPage) {
   document.body.classList.add("fade-out");
 
   setTimeout(() => {
-    window.location.href = targetPage;
+    window.location.href = about.html;
   }, 600); // match CSS duration
 }
 </script>
