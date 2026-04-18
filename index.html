@@ -207,6 +207,7 @@ const speechBubble = document.getElementById("speechBubble");
 let dialogue = [
   "Hello! Welcome to my website!",
   "Use arrow keys to move",
+  "Use space to jump",
   "Jump into ABOUT to learn more about me"
 ];
 
@@ -220,6 +221,19 @@ if (dialogueIndex < dialogue.length) {
   } else {
     speechBubble.style.display = "none"; // hide after last message
   }
+  document.addEventListener("keydown", (e) => {
+
+  // Dialogue 1 → requires arrow keys
+  if (dialogueIndex === 1 && 
+      (e.key === "ArrowLeft" || e.key === "ArrowRight")) {
+    nextDialogue();
+  }
+
+  // Dialogue 2 → requires spacebar
+  else if (dialogueIndex === 2 && e.code === "Space") {
+    nextDialogue();
+  }
+});
 });
 
 /* ---------------------------
