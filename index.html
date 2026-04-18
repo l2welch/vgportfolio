@@ -93,52 +93,7 @@ body.fade-out {
   opacity: 0;
 }
 
-  #speechBubble {
-  position: absolute;
-  left: 60%;
-  bottom: 21.5%;
-  transform: translateX(-50%);
 
-  width: 260px;
-  height: 200px;
-
-  background-image: url("bubble.png"); /* your hand-drawn bubble */
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  text-align: center;
-  font-family: 'Barlow Condensed', sans-serif;
-
-  padding: 40px; /* top right bottom left */
-}
-
-  width: 0;
-  height: 0;
-
-  border-left: 15px solid transparent;
-  border-right: 15px solid transparent;
-  border-top: 20px solid #eef; /* same as bubble */
-}
-
-#speechMain {
-  font-size: 30px;
-  font-family: 'Sue Ellen Francisco', monospace;
-  color: #111;
-}
-
-#speechSub {
-  font-size: 20px;
-  font-family: 'Sue Ellen Francisco', monospace;
-  color: #777;
-  margin-top: 5px;
-}
- 
 </style>
 </head>
 
@@ -196,45 +151,6 @@ let frameDelay = 5;
 
  let transitioning = false;
   
-/* ---------------------------
-   SPEECH BUBBLE
-----------------------------*/
-
-const speechMain = document.getElementById("speechMain");
-const speechSub = document.getElementById("speechSub");
-const speechBubble = document.getElementById("speechBubble");
-
-let dialogue = [
-  "Hello! Welcome to my website!",
-  "Use arrow keys to move",
-  "Use space to jump",
-  "Jump into ABOUT to learn more about me"
-];
-
-let dialogueIndex = 0;
-
-document.addEventListener("click", () => {
-  dialogueIndex++;
-
-if (dialogueIndex < dialogue.length) {
-    speechMain.textContent = dialogue[dialogueIndex];
-  } else {
-    speechBubble.style.display = "none"; // hide after last message
-  }
-  document.addEventListener("keydown", (e) => {
-
-  // Dialogue 1 → requires arrow keys
-  if (dialogueIndex === 1 && 
-      (e.key === "ArrowLeft" || e.key === "ArrowRight")) {
-    nextDialogue();
-  }
-
-  // Dialogue 2 → requires spacebar
-  else if (dialogueIndex === 2 && e.code === "Space") {
-    nextDialogue();
-  }
-});
-});
 
 /* ---------------------------
    MOVEMENT - INPUTS
