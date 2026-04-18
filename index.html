@@ -92,23 +92,27 @@ body.fade-out {
   #speechBubble {
   position: absolute;
   left: 50%;
-  bottom: 45%; /* above player */
+  bottom: 45%;
   transform: translateX(-50%);
-  background: #eef;
-  padding: 15px 20px;
-  border-radius: 50px;
-  border-style: solid;  
-  border-width: 3px;
-  border-color: black;
-  font-family: 'Barlow Condensed', sans-serif;
+
+  width: 260px;
+  height: 200px;
+
+  background-image: url("bubble.png"); /* your hand-drawn bubble */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
   text-align: center;
-  pointer-events: none; /* clicks go through */
+  font-family: 'Barlow Condensed', sans-serif;
+
+  padding: 30px 20px 20px 20px; /* top right bottom left */
 }
-  #speechBubble::after {
-  content: "";
-  position: absolute;
-  bottom: -10px;   /* pushes it below bubble */
-  left: 30px;      /* move left/right to position tail */
 
   width: 0;
   height: 0;
